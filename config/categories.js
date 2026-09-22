@@ -1,84 +1,83 @@
 // ===============================================
-// КАТЕГОРИИ ТОВАРОВ - ЗДЕСЬ ВЫ МОЖЕТЕ ДОБАВЛЯТЬ/УДАЛЯТЬ КАТЕГОРИИ
+// MAHSULOT KATEGORIYALARI - NOVA SHOP
 // ===============================================
 
 const CATEGORIES = [
   {
-    name: 'Стройматериалы',
-    icon: '🏗️',
-    description: 'Цемент, плитка, гипсокартон',
-    keywords: ['цемент', 'плитка', 'керамогранит', 'ламинат', 'гипсокартон', 'профиль', 'штукатурка', 'фанера'],
+    name: 'Barcha mahsulotlar',
+    icon: '🛍️',
+    description: 'Barcha mahsulotlarni ko\'rish',
+    keywords: [],
     enabled: true
   },
   {
-    name: 'Электрика',
-    icon: '⚡️',
-    description: 'Кабели, выключатели, розетки',
-    keywords: ['кабель', 'розетка', 'выключатель', 'удлинитель', 'провод', 'автомат'],
+    name: 'Telefonlar',
+    icon: '📱',
+    description: 'Smartfon va planshetlar',
+    keywords: ['samsung', 'redmi', 'poco', 'infinix', 'galaxy', 'note', 'telefon', 'smartfon'],
     enabled: true
   },
   {
-    name: 'Сантехника',
-    icon: '🚽',
-    description: 'Трубы, краны, смесители',
-    keywords: ['труба', 'кран', 'смеситель', 'унитаз', 'ванна', 'душ'],
-    enabled: true // Отключена (не будет показываться)
-  },
-  {
-    name: 'Двери и окна',
-    icon: '🚪',
-    description: 'Межкомнатные и входные двери',
-    keywords: ['дверь', 'окно', 'замок', 'петли', 'ручка'],
+    name: 'Audio',
+    icon: '🎧',
+    description: 'Quloqchin va dinamiklar',
+    keywords: ['airpods', 'buds', 'jbl', 'earbuds', 'speaker', 'quloqchin', 'audio', 'dinamik'],
     enabled: true
   },
   {
-    name: 'Освещение',
-    icon: '💡',
-    description: 'Лампы, светильники, люстры',
-    keywords: ['лампа', 'светильник', 'люстра', 'бра', 'торшер'],
-    enabled: true // Отключена
+    name: 'Zaryadlash',
+    icon: '🔌',
+    description: 'Quvvatlagich va kabellar',
+    keywords: ['charger', 'cable', 'power', 'bank', 'zaryad', 'kabel', 'quvvat'],
+    enabled: true
   },
   {
-    name: 'Садовые товары',
-    icon: '🪴',
-    description: 'Товары для сада и огорода',
-    keywords: ['лопата', 'грабли', 'садовый', 'семена', 'удобрение'],
-    enabled: true // Отключена
+    name: 'Aksessuarlar',
+    icon: '📱',
+    description: 'G'ilof va himoya oynalari',
+    keywords: ['case', 'glass', 'holder', 'stick', 'g\'ilof', 'oyna', 'aksessuar'],
+    enabled: true
+  },
+  {
+    name: 'Kiyimlar',
+    icon: '👕',
+    description: 'Erkaklar va ayollar kiyimi',
+    keywords: ['shirt', 'hoodie', 'shim', 'kostyum', 'kepka', 'kiyim', 'futbolka'],
+    enabled: true
+  },
+  {
+    name: 'Gadjetlar',
+    icon: '⌚',
+    description: 'Aqlli soat va boshqa gadjetlar',
+    keywords: ['watch', 'lamp', 'fan', 'usb', 'flash', 'soat', 'gadjet', 'led'],
+    enabled: true
   }
 ];
 
 // ===============================================
-// ИНСТРУКЦИЯ ПО НАСТРОЙКЕ КАТЕГОРИЙ:
+// KATEGORIYALARNI SOZLASH
 // ===============================================
 /*
 
-1. ДОБАВЛЕНИЕ НОВОЙ КАТЕГОРИИ:
-   Скопируйте блок категории и измените параметры:
+1. YANGI KATEGORIYA QO'SHISH:
+   Quyidagi blokni nusxalab, o'zgartiring:
    
    {
-       name: 'Название категории',
-       icon: '🔥',  // Любой эмодзи
-       description: 'Описание категории',
-       keywords: ['ключевое', 'слово', 'для', 'поиска'],
-       enabled: true  // true = показывать, false = скрыть
+       name: 'Kategoriya nomi',
+       icon: '🔥',  // Har qanday emoji
+       description: 'Kategoriya tavsifi',
+       keywords: ['kalit', 'so\'z', 'qidiruv'],
+       enabled: true  // true = ko'rsatish, false = yashirish
    }
 
-2. ИЗМЕНЕНИЕ СУЩЕСТВУЮЩЕЙ КАТЕГОРИИ:
-   - name: измените название
-   - icon: выберите новый эмодзи
-   - description: измените описание
-   - keywords: добавьте слова для поиска товаров
-   - enabled: true/false для показа/скрытия
+2. KALIT SO'ZLAR (keywords):
+   - Mahsulot nomida bor so'zlarni yozing
+   - Mahsulotlar shu so'zlar bo'yicha filtrlanadi
 
-3. КЛЮЧЕВЫЕ СЛОВА (keywords):
-   - Указывайте слова, которые есть в названиях товаров
-   - Товары будут фильтроваться по этим словам
-   - Можно указывать часть слова: 'дрель' найдет "Дрель ударная"
+3. KATEGORIYANI O'CHIRISH:
+   enabled: false qo'ying
 
-4. ОТКЛЮЧЕНИЕ КАТЕГОРИИ:
-   Просто поставьте enabled: false
-
-5. ПОРЯДОК КАТЕГОРИЙ:
-   Категории показываются в том порядке, в котором они указаны в массиве
+4. TARTIB:
+   Kategoriyalar massiv tartibida ko'rsatiladi
 
 */
