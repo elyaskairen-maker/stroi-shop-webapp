@@ -493,7 +493,9 @@ class ShopApp {
         if (categoryName === 'Barcha mahsulotlar') {
             filtered = this.allProducts;
         } else {
-            const selectedCategory = CATEGORIES.find(cat => cat.name === categoryName);
+            const selectedCategory = (window.CATEGORIES || []).find(
+    cat => cat.name === categoryName
+);
             if (selectedCategory && selectedCategory.keywords.length > 0) {
                 filtered = this.allProducts.filter(product => {
                     const productNameLower = product.name.toLowerCase();
