@@ -409,12 +409,15 @@ class ShopApp {
         this.elements.submitOrderButton.disabled = true;
 
         setTimeout(() => {
-            if (this.tg && this.tg.sendData) {
-                this.tg.sendData(JSON.stringify(orderData));
-            } else {
-                console.log('Buyurtma ma\'lumotlari:', orderData);
-            }
+            // Matn ko'rinishida tayyorlash
+            const orderText = this.formatOrderForBot(orderData);
             
+            if (this.tg && this.tg.sendData) {
+                this.tg.sendData(orderText);
+            } else {
+                console.log('Buyurtma:', orderText);
+            }
+
             this.showAlert(SHOP_CONFIG.messages.orderSuccess);
 
             // Savatcha va formani tozalash
@@ -422,14 +425,37 @@ class ShopApp {
             this.updateCart();
             this.clearOrderForm();
             this.closeCart();
-            
+
             this.elements.submitOrderButton.innerHTML = '✅ Buyurtma berish';
             this.elements.submitOrderButton.disabled = false;
 
             if (this.tg && this.tg.close) {
-                setTimeout(() => this.tg.close(), 1000);
+                setTimeout(() => this.tg.close(), 1500);
             }
         }, 1500);
+    }
+
+    // Buyurtmani bot uchun matn ko'rinishida tayyorlash
+    formatOrderForBot(orderData) {
+        let text = "🆕 YANGI BUYURTMA\n";
+        text += "━━━━━━━━━━━━━━━━━━━━\n\n";
+        text += `👤 Ism: ${orderData.customer.name}\n`;
+        text += `👤 Familiya: ${orderData.customer.organization}\n`;
+        text += `📞 Telefon: ${orderData.customer.phone}\n`;
+        text += `📍 Manzil: ${orderData.customer.address}\n`;
+        text += `💵 To'lov: ${orderData.customer.paymentMethod}\n\n`;
+        
+        text += "🛒 Mahsulotlar:\n";
+        orderData.items.forEach(item => {
+            const sum = item.price * item.quantity;
+            text += `• ${item.name} × ${item.quantity} = ${sum.toLocaleString()} so'm\n`;
+        });
+        
+        text += `\n━━━━━━━━━━━━━━━━━━━━\n`;
+        text += `💰 JAMI: ${orderData.totalPrice.toLocaleString()} so'm\n\n`;
+        text += `🆔 Telegram: ${orderData.customer.telegramUsername ? '@' + orderData.customer.telegramUsername : orderData.customer.telegramId}`;
+        
+        return text;
     }
 
     // Buyurtma formasini tozalash
@@ -453,6 +479,7 @@ class ShopApp {
     renderCategories() {
         this.elements.categoriesContainer.innerHTML = '';
         
+        // Xavfsiz yechim - window.CATEGORIES || []
         const enabledCategories = (window.CATEGORIES || []).filter(cat => cat.enabled);
         
         enabledCategories.forEach((category, index) => {
@@ -493,9 +520,11 @@ class ShopApp {
         if (categoryName === 'Barcha mahsulotlar') {
             filtered = this.allProducts;
         } else {
+            // Xavfsiz yechim - window.CATEGORIES || []
             const selectedCategory = (window.CATEGORIES || []).find(
-    cat => cat.name === categoryName
-);
+                cat => cat.name === categoryName
+            );
+            
             if (selectedCategory && selectedCategory.keywords.length > 0) {
                 filtered = this.allProducts.filter(product => {
                     const productNameLower = product.name.toLowerCase();
