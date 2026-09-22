@@ -3,7 +3,7 @@
 // MAHSULOT KATEGORIYALARI - NOVA SHOP
 // ===============================================
 
-const CATEGORIES = [
+window.CATEGORIES = [
   {
     name: 'Barcha mahsulotlar',
     icon: '🛍️',
