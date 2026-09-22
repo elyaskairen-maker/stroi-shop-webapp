@@ -1,5 +1,5 @@
 // ===============================================
-// ОСНОВНАЯ ЛОГИКА МАГАЗИНА - ИСПРАВЛЕННАЯ ВЕРСИЯ
+// ASOSIY DO'KON LOGIKASI - NOVA SHOP
 // ===============================================
 
 class ShopApp {
@@ -7,7 +7,7 @@ class ShopApp {
         this.tg = window.Telegram?.WebApp;
         this.cart = [];
         this.allProducts = [];
-        this.currentCategory = 'Все товары';
+        this.currentCategory = 'Barcha mahsulotlar';
         
         this.initTelegram();
         this.initDOM();
@@ -15,7 +15,7 @@ class ShopApp {
         this.init();
     }
 
-    // Инициализация Telegram Web App
+    // Telegram Web App ni ishga tushirish
     initTelegram() {
         if (this.tg) {
             this.tg.ready();
@@ -26,7 +26,7 @@ class ShopApp {
         }
     }
 
-    // Инициализация DOM элементов
+    // DOM elementlarini olish
     initDOM() {
         this.elements = {
             catalogContainer: document.getElementById('product-catalog'),
@@ -48,19 +48,19 @@ class ShopApp {
         };
     }
 
-    // Инициализация обработчиков событий
+    // Event listenerlar
     initEventListeners() {
-        // Корзина
+        // Savatcha
         this.elements.cartButton.addEventListener('click', () => this.openCart());
         this.elements.closeCartButton.addEventListener('click', () => this.closeCart());
         this.elements.cartModal.addEventListener('click', (e) => {
             if (e.target === this.elements.cartModal) this.closeCart();
         });
 
-        // Форма заказа
+        // Buyurtma formasi
         this.elements.submitOrderButton.addEventListener('click', () => this.submitOrder());
 
-        // Клавиатура
+        // Klaviatura
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape' && this.elements.cartModal.style.display === 'flex') {
                 this.closeCart();
@@ -68,7 +68,7 @@ class ShopApp {
         });
     }
 
-    // Основная инициализация
+    // Asosiy ishga tushirish
     async init() {
         this.applyConfig();
         this.renderCategories();
@@ -76,7 +76,7 @@ class ShopApp {
         this.filterProductsByCategory(this.currentCategory);
     }
 
-    // Применение конфигурации
+    // Konfiguratsiyani qo'llash
     applyConfig() {
         document.title = SHOP_CONFIG.shopTitle;
         document.getElementById('shop-title').textContent = SHOP_CONFIG.shopTitle;
@@ -85,79 +85,68 @@ class ShopApp {
         logoImg.src = SHOP_CONFIG.logoPath;
         logoImg.onerror = () => { logoImg.style.display = 'none'; };
         
-        // Применение цветов
+        // Ranglarni qo'llash
         const root = document.documentElement;
         root.style.setProperty('--primary-color', SHOP_CONFIG.colors.primary);
         root.style.setProperty('--secondary-color', SHOP_CONFIG.colors.secondary);
         root.style.setProperty('--accent-color', SHOP_CONFIG.colors.accent);
         root.style.setProperty('--success-color', SHOP_CONFIG.colors.success);
 
-        // Обновление заголовков секций
+        // Sarlavhalarni yangilash
         document.querySelector('.categories-section .section-title').textContent = SHOP_CONFIG.sectionTitles.categories;
         document.querySelector('.products-section .section-title').textContent = SHOP_CONFIG.sectionTitles.products;
     }
 
-    // ИСПРАВЛЕНО: Загрузка товаров
+    // Mahsulotlarni yuklash
     async loadProducts() {
         try {
             this.showLoader();
             
-            // Проверяем наличие встроенного каталога
+            // Ichki katalogni tekshirish
             if (window.EMBEDDED_CATALOG && Array.isArray(window.EMBEDDED_CATALOG)) {
-                console.log('Используем встроенный каталог');
+                console.log('Ichki katalog ishlatilmoqda');
                 this.allProducts = window.EMBEDDED_CATALOG;
                 this.renderProducts(this.allProducts);
                 return;
             }
             
-            // Попытка загрузить из JSON файла
+            // JSON fayldan yuklashga urinish
             try {
                 const response = await fetch('data/catalog.json');
                 if (response.ok) {
                     const data = await response.json();
                     this.allProducts = data;
-                    console.log('Каталог загружен из JSON');
+                    console.log('Katalog JSON dan yuklandi');
                 } else {
-                    throw new Error('Файл не найден');
+                    throw new Error('Fayl topilmadi');
                 }
             } catch (error) {
-                console.log('Не удалось загрузить catalog.json, используем тестовые данные');
-                // Fallback к тестовым данным
-                this.allProducts = this.getTestProducts();
+                console.log('catalog.json yuklanmadi');
+                this.allProducts = [];
             }
             
             this.renderProducts(this.allProducts);
         } catch (error) {
-            console.error('Ошибка загрузки товаров:', error);
-            this.showError('Не удалось загрузить товары');
+            console.error('Mahsulotlarni yuklashda xato:', error);
+            this.showError('Mahsulotlar yuklanmadi');
         } finally {
             this.hideLoader();
         }
     }
 
-    // Тестовые данные (fallback)
-    getTestProducts() {
-        return [
-            { id: 1, sku: "SHR-3545-001", name: "Шурупы универсальные 3,5x45", description: "Шурупы высокого качества для крепления различных материалов", price: 34.30, photo: "https://images.unsplash.com/photo-1609205292622-0d43b9e24f11?w=300&h=300&fit=crop", category: "Крепеж" },
-            { id: 2, sku: "KRA-10L-003", name: "Краска водоэмульсионная белая 10л", description: "Высококачественная водоэмульсионная краска для внутренних работ", price: 478.60, photo: "https://images.unsplash.com/photo-1589939705384-5185137a7f0f?w=300&h=300&fit=crop", category: "Лакокрасочные" },
-            { id: 3, sku: "DRL-850W-006", name: "Дрель ударная 850Вт", description: "Профессиональная ударная дрель с регулировкой оборотов", price: 1650.00, photo: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=300&h=300&fit=crop", category: "Инструменты" },
-            { id: 4, sku: "CEM-M500-009", name: "Цемент М500 50кг", description: "Портландцемент марки 500 для приготовления бетона", price: 160.10, photo: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=300&h=300&fit=crop", category: "Стройматериалы" }
-        ];
-    }
-
-    // Показать загрузчик
+    // Loader ko'rsatish
     showLoader() {
         this.elements.loader.style.display = 'block';
         this.elements.catalogContainer.style.display = 'none';
     }
 
-    // Скрыть загрузчик
+    // Loader yashirish
     hideLoader() {
         this.elements.loader.style.display = 'none';
         this.elements.catalogContainer.style.display = 'grid';
     }
 
-    // Показать ошибку
+    // Xatoni ko'rsatish
     showError(message) {
         this.elements.loader.innerHTML = `
             <div style="text-align: center; color: white;">
@@ -167,7 +156,7 @@ class ShopApp {
         `;
     }
 
-    // Отображение товаров
+    // Mahsulotlarni ko'rsatish
     renderProducts(productsToRender) {
         this.elements.catalogContainer.innerHTML = '';
         
@@ -190,7 +179,7 @@ class ShopApp {
         });
     }
 
-    // Создание карточки товара
+    // Mahsulot kartochkasini yaratish
     createProductCard(product) {
         const card = document.createElement('div');
         card.className = 'product-card';
@@ -207,7 +196,7 @@ class ShopApp {
                 <p class="product-description">${product.description}</p>
                 <div class="product-footer">
                     <div class="product-price">${formattedPrice}</div>
-                    <button class="add-to-cart-button">В корзину</button>
+                    <button class="add-to-cart-button">Savatchaga</button>
                 </div>
             </div>
         `;
@@ -221,7 +210,7 @@ class ShopApp {
         return card;
     }
 
-    // Анимация добавления в корзину
+    // Savatchaga qo'shish animatsiyasi
     animateAddToCart(button) {
         const originalText = button.textContent;
         button.style.transform = 'scale(0.9)';
@@ -233,16 +222,17 @@ class ShopApp {
         }, 500);
     }
 
-    // Форматирование цены
+    // Narxni formatlash
     formatPrice(price) {
-        return new Intl.NumberFormat('ru-RU', {
-            style: 'currency',
-            currency: SHOP_CONFIG.currency.code,
-            minimumFractionDigits: 0
+        const formatted = new Intl.NumberFormat('uz-UZ', {
+            minimumFractionDigits: 0,
+            maximumFractionDigits: 0
         }).format(price);
+        
+        return `${formatted} ${SHOP_CONFIG.currency.symbol}`;
     }
 
-    // Логика корзины
+    // Savatcha logikasi
     addToCart(product) {
         const existingProduct = this.cart.find(p => p.id === product.id);
         if (existingProduct) {
@@ -252,12 +242,13 @@ class ShopApp {
         }
         this.updateCart();
         
-        // Тактильная обратная связь
+        // Taktil aloqa
         if (this.tg && this.tg.HapticFeedback) {
             this.tg.HapticFeedback.impactOccurred('light');
         }
     }
 
+    // Miqdorni o'zgartirish
     changeQuantity(productId, delta) {
         const product = this.cart.find(p => p.id === productId);
         if (!product) return;
@@ -270,6 +261,7 @@ class ShopApp {
         this.updateCart();
     }
 
+    // Savatchani yangilash
     updateCart() {
         const totalItems = this.cart.reduce((sum, product) => sum + product.quantity, 0);
         this.elements.cartCounter.textContent = totalItems;
@@ -278,6 +270,7 @@ class ShopApp {
         this.calculateTotalPrice();
     }
 
+    // Savatcha elementlarini ko'rsatish
     renderCartItems() {
         this.elements.cartItemsContainer.innerHTML = '';
 
@@ -318,7 +311,7 @@ class ShopApp {
             this.elements.cartItemsContainer.appendChild(itemEl);
         });
 
-        // Добавляем обработчики для кнопок количества
+        // Miqdor tugmalari uchun handlerlar
         document.querySelectorAll('.quantity-btn').forEach(button => {
             button.addEventListener('click', (e) => {
                 const productId = parseInt(e.target.dataset.productId, 10);
@@ -328,13 +321,14 @@ class ShopApp {
         });
     }
 
+    // Umumiy narxni hisoblash
     calculateTotalPrice() {
         const total = this.cart.reduce((sum, product) => sum + (product.price * product.quantity), 0);
         const formattedTotal = this.formatPrice(total);
         this.elements.cartTotalPriceEl.textContent = formattedTotal;
     }
 
-    // Управление модальным окном корзины
+    // Savatcha oynasini boshqarish
     openCart() {
         this.elements.cartModal.style.display = 'flex';
         this.renderCartItems();
@@ -344,7 +338,7 @@ class ShopApp {
         this.elements.cartModal.style.display = 'none';
     }
 
-    // ИСПРАВЛЕНО: Отправка заказа с обязательной организацией
+    // Buyurtma yuborish
     submitOrder() {
         const customerName = this.elements.customerNameInput.value.trim();
         const organization = this.elements.organizationInput.value.trim();
@@ -357,19 +351,25 @@ class ShopApp {
             return;
         }
         
-        // ИСПРАВЛЕНО: Организация теперь обязательна
+        // Telefon raqamni tekshirish
+        const phoneRegex = /^\+998\d{9}$/;
+        if (!phoneRegex.test(phone.replace(/\s/g, ''))) {
+            this.showAlert('Telefon raqam noto\'g\'ri. Format: +998901234567');
+            return;
+        }
+        
         if (!customerName || !organization || !phone || !address) {
-            this.showAlert('Пожалуйста, заполните все обязательные поля: имя, организацию, телефон и адрес доставки.');
+            this.showAlert('Iltimos, ism, familiya, telefon va manzilni to\'ldiring.');
             return;
         }
 
-        // Добавляем данные Telegram пользователя
+        // Telegram foydalanuvchi ma'lumotlari
         const telegramUser = this.tg ? this.tg.initDataUnsafe.user : null;
 
         const orderData = {
             items: this.cart.map(p => ({ 
                 id: p.id, 
-                sku: p.sku, // Добавляем артикул для админа
+                sku: p.sku,
                 name: p.name, 
                 price: p.price, 
                 quantity: p.quantity 
@@ -381,7 +381,6 @@ class ShopApp {
                 phone: phone,
                 address: address,
                 paymentMethod: this.getPaymentMethodLabel(paymentMethod),
-                // Telegram данные пользователя
                 telegramId: telegramUser?.id || '',
                 telegramUsername: telegramUser?.username || '',
                 telegramFirstName: telegramUser?.first_name || '',
@@ -397,13 +396,15 @@ class ShopApp {
         this.processOrder(orderData);
     }
 
+    // To'lov usulini olish
     getPaymentMethodLabel(value) {
         const method = SHOP_CONFIG.paymentMethods.find(m => m.value === value);
-        return method ? method.label : 'Не указан';
+        return method ? method.label : 'Ko\'rsatilmagan';
     }
 
+    // Buyurtmani qayta ishlash
     processOrder(orderData) {
-        // Анимация отправки
+        // Yuborish animatsiyasi
         this.elements.submitOrderButton.innerHTML = SHOP_CONFIG.messages.sending;
         this.elements.submitOrderButton.disabled = true;
 
@@ -411,18 +412,18 @@ class ShopApp {
             if (this.tg && this.tg.sendData) {
                 this.tg.sendData(JSON.stringify(orderData));
             } else {
-                console.log('Данные заказа:', orderData);
+                console.log('Buyurtma ma\'lumotlari:', orderData);
             }
             
             this.showAlert(SHOP_CONFIG.messages.orderSuccess);
 
-            // Очищаем корзину и форму
+            // Savatcha va formani tozalash
             this.cart = [];
             this.updateCart();
             this.clearOrderForm();
             this.closeCart();
             
-            this.elements.submitOrderButton.innerHTML = '✅ Оформить заказ';
+            this.elements.submitOrderButton.innerHTML = '✅ Buyurtma berish';
             this.elements.submitOrderButton.disabled = false;
 
             if (this.tg && this.tg.close) {
@@ -431,6 +432,7 @@ class ShopApp {
         }, 1500);
     }
 
+    // Buyurtma formasini tozalash
     clearOrderForm() {
         this.elements.customerNameInput.value = '';
         this.elements.organizationInput.value = '';
@@ -438,6 +440,7 @@ class ShopApp {
         this.elements.addressInput.value = '';
     }
 
+    // Ogohlantirish ko'rsatish
     showAlert(message) {
         if (this.tg && this.tg.showAlert) {
             this.tg.showAlert(message);
@@ -446,11 +449,10 @@ class ShopApp {
         }
     }
 
-    // Логика категорий
+    // Kategoriyalarni ko'rsatish
     renderCategories() {
         this.elements.categoriesContainer.innerHTML = '';
         
-        // Фильтруем только включенные категории
         const enabledCategories = CATEGORIES.filter(cat => cat.enabled);
         
         enabledCategories.forEach((category, index) => {
@@ -483,11 +485,12 @@ class ShopApp {
         });
     }
 
+    // Kategoriya bo'yicha filtrlash
     filterProductsByCategory(categoryName) {
         this.currentCategory = categoryName;
         let filtered = [];
 
-        if (categoryName === 'Все товары') {
+        if (categoryName === 'Barcha mahsulotlar') {
             filtered = this.allProducts;
         } else {
             const selectedCategory = CATEGORIES.find(cat => cat.name === categoryName);
@@ -508,7 +511,7 @@ class ShopApp {
     }
 }
 
-// Инициализация приложения
+// Ilovani ishga tushirish
 document.addEventListener('DOMContentLoaded', () => {
     new ShopApp();
 });
