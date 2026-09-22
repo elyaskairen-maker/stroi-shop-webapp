@@ -3,7 +3,7 @@
 // ===============================================
 
 class ShopApp {
-    constructor() {
+   constructor() {
         this.tg = window.Telegram?.WebApp;
         this.cart = [];
         this.allProducts = [];
