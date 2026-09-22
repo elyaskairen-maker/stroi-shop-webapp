@@ -1,75 +1,75 @@
 // ===============================================
-// НАСТРОЙКИ МАГАЗИНА - ЗДЕСЬ ВЫ МОЖЕТЕ ВСЕ ИЗМЕНИТЬ
+// DO'KON SOZLAMALARI - HAMMASINI O'ZGARTIRISH MUMKIN
 // ===============================================
 
 const SHOP_CONFIG = {
-    // === ОСНОВНАЯ ИНФОРМАЦИЯ ===
-    shopTitle: "СтройМаркет Pro",
-    shopDescription: "Качественные строительные материалы",
+    // === ASOSIY MA'LUMOT ===
+    shopTitle: "NOVA SHOP",
+    shopDescription: "Sifatli mahsulotlar - qulay narxlar",
     
-    // === ЛОГОТИП ===
-    // Укажите путь к вашему логотипу или URL изображения
+    // === LOGOTIP ===
+    // O'zingizning logotipingizni qo'ying
     logoPath: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=100&h=100&fit=crop&crop=center",
     
-    // === ЦВЕТА МАГАЗИНА ===
+    // === DO'KON RANGLARI ===
     colors: {
-        primary: "#2563eb",      // Основной цвет (синий)
-        secondary: "#7c3aed",    // Дополнительный цвет (фиолетовый)
-        accent: "#f59e0b",       // Акцентный цвет (оранжевый)
-        success: "#10b981"       // Цвет успеха (зеленый)
+        primary: "#16a34a",      // Asosiy rang (yashil)
+        secondary: "#22c55e",    // Qo'shimcha (ochiq yashil)
+        accent: "#f59e0b",       // Aksent (to'q sariq)
+        success: "#10b981"       // Muvaffaqiyat (yashil)
     },
     
-    // === ВАЛЮТА ===
+    // === VALYUTA ===
     currency: {
-        code: "RUB",             // Код валюты
-        symbol: "₽"              // Символ валюты
+        code: "UZS",             // Valyuta kodi
+        symbol: "so'm"           // Valyuta belgisi
     },
     
-    // === КОНТАКТНАЯ ИНФОРМАЦИЯ ===
+    // === ALOQA MA'LUMOTLARI ===
     contact: {
-        phone: "+7 (900) 123-45-67",
-        email: "info@stroymarket.ru",
-        address: "г. Москва, ул. Строительная, 123"
+        phone: "+998 90 123 45 67",
+        email: "info@novashop.uz",
+        address: "Toshkent sh., Chilonzor tumani"
     },
     
-    // === НАСТРОЙКИ ДОСТАВКИ ===
+    // === YETKAZIB BERISH ===
     delivery: {
-        freeDeliveryFrom: 5000,  // Бесплатная доставка от суммы (в копейках)
-        deliveryCost: 500,       // Стоимость доставки (в копейках)
-        deliveryText: "Доставка по городу"
+        freeDeliveryFrom: 500000,  // Bepul yetkazish (so'm)
+        deliveryCost: 20000,       // Yetkazish narxi (so'm)
+        deliveryText: "Toshkent bo'ylab yetkazib berish"
     },
     
-    // === СПОСОБЫ ОПЛАТЫ ===
+    // === TO'LOV USULLARI ===
     paymentMethods: [
-        { value: "cash", label: "💵 Наличными", enabled: true },
-        { value: "card", label: "💳 Картой", enabled: true },
-        { value: "transfer", label: "🏦 Переводом", enabled: false }
+        { value: "cash", label: "💵 Naqd pul", enabled: true },
+        { value: "card", label: "💳 Karta", enabled: true },
+        { value: "transfer", label: "🏦 O'tkazma", enabled: false }
     ],
     
-    // === ЗАГОЛОВКИ СЕКЦИЙ ===
+    // === BO'LIM SARLAVHALARI ===
     sectionTitles: {
-        categories: "🏗️ Категории товаров",
-        products: "🛠️ Наши товары",
-        cart: "🛒 Ваша корзина",
-        order: "📋 Оформление заказа"
+        categories: "📱 Kategoriyalar",
+        products: "🛍️ Mahsulotlar",
+        cart: "🛒 Savatchangiz",
+        order: "📋 Buyurtma berish"
     },
     
-    // === ТЕКСТЫ УВЕДОМЛЕНИЙ ===
+    // === XABAR MATNLARI ===
     messages: {
-        emptyCart: "Ваша корзина пуста",
-        emptyCartDescription: "Добавьте товары для оформления заказа",
-        addedToCart: "✅ Добавлено!",
-        orderSuccess: "Заказ успешно оформлен! Мы свяжемся с вами в ближайшее время.",
-        fillRequiredFields: "Пожалуйста, заполните все обязательные поля: имя, телефон и адрес доставки.",
-        loading: "Загрузка товаров...",
-        sending: "⏳ Отправляем...",
-        noProducts: "В этой категории пока нет товаров"
+        emptyCart: "Savatchangiz bo'sh",
+        emptyCartDescription: "Buyurtma berish uchun mahsulot qo'shing",
+        addedToCart: "✅ Qo'shildi!",
+        orderSuccess: "Buyurtma qabul qilindi! Tez orada siz bilan bog'lanamiz.",
+        fillRequiredFields: "Iltimos, ism, telefon va manzilni to'ldiring.",
+        loading: "Mahsulotlar yuklanmoqda...",
+        sending: "⏳ Yuborilmoqda...",
+        noProducts: "Bu kategoriyada mahsulotlar yo'q"
     },
     
-    // === НАСТРОЙКИ АНИМАЦИИ ===
+    // === ANIMATSIYA ===
     animation: {
-        enabled: true,           // Включить/выключить анимации
-        duration: 300,           // Длительность анимаций (мс)
-        staggerDelay: 100        // Задержка между элементами (мс)
+        enabled: true,
+        duration: 300,
+        staggerDelay: 100
     }
 };
