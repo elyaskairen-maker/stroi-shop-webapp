@@ -453,7 +453,7 @@ class ShopApp {
     renderCategories() {
         this.elements.categoriesContainer.innerHTML = '';
         
-        const enabledCategories = CATEGORIES.filter(cat => cat.enabled);
+        const enabledCategories = (window.CATEGORIES || []).filter(cat => cat.enabled);
         
         enabledCategories.forEach((category, index) => {
             const button = document.createElement('div');
